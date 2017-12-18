@@ -2,7 +2,13 @@ var History = require("./diffHistoryModel");
 var async = require("async");
 var jsondiffpatch = require("jsondiffpatch").create();
 
-var saveHistoryObject = function (history, callback){
+var saveHistoryObject = function (history, callback) {
+    var keysToExclude = ['$setOnInsert', 'modified'];
+    keysToExclude.forEach(function(key) {
+        if (history.diff[key]) {
+            delete history.diff[key];
+        }
+    });
     history.save(function (err) {
         if (err) {
             err.message = "Mongo Error :" + err.message;

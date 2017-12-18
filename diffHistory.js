@@ -152,7 +152,7 @@ var plugin = function lastModifiedPlugin(schema, options) {
             next();
         }else{
             self.constructor.findOne({_id: self._id}, function (err, original) {
-                saveDiffObject(self, original, self, self.__user, self.__reason, function(){
+                saveDiffObject(self, original, self, self.__user, 'Update', function(){
                     next();
                 });
             });
@@ -160,19 +160,21 @@ var plugin = function lastModifiedPlugin(schema, options) {
     });
 
     schema.pre("findOneAndUpdate", function (next) {
-        saveDiffs(this, function(){
-            next();
-        });
+      this.options.__reason = 'Update';
+      saveDiffs(this, function(){
+          next();
+      });
     });
 
     schema.pre("update", function (next) {
+      this.options.__reason = 'Update';
         saveDiffs(this, function(){
             next();
         });
     });
 
     schema.pre("remove", function(next) {
-        saveDiffObject(this, this, {}, this.__user, this.__reason, function(){
+        saveDiffObject(this, this, {}, this.__user, 'Delete', function(){
             next();
         })
     });

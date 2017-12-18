@@ -10,7 +10,8 @@ var historySchema = new mongoose.Schema(
     },
     {
         timestamps: true
-    });
+    }
+);
 
 var History = mongoose.model("History", historySchema);
 module.exports = History;

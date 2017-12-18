@@ -128,6 +128,7 @@ var getHistories = function (modelName, id, expandableFields, callback) {
                 }
             }
             var comment = "modified " + changedFields.concat(changedValues).join(", ");
+            console.error(history);
             return mapCallback(null, {
                 changedBy: history.user,
                 changedAt: history.createdAt,

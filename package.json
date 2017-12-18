@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "async": "*",
-    "jsondiffpatch": "0.1.38"
+    "jsondiffpatch": "0.2.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",

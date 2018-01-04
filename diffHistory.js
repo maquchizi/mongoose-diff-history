@@ -126,9 +126,8 @@
     History.find({
       collectionName: modelName,
       collectionId: id
-    }, function(err, histories) {
+    }).populate('user').exec(function(err, histories) {
       if (err) {
-        console.error(err);
         return callback(err, null);
       }
       async.map(histories, function(history, mapCallback) {
@@ -147,17 +146,16 @@
           }
         }
         var comment = "modified " + changedFields.concat(changedValues).join(", ");
-        console.error(history);
         return mapCallback(null, {
-          changedBy: history.user,
+          changedBy: history.user.profile,
           changedAt: history.createdAt,
           updatedAt: history.updatedAt,
           reason: history.reason,
-          comment: comment
+          comment: comment,
+          diff: history.diff,
         })
       }, function(err, output) {
         if (err) {
-          console.error(err);
           return callback(err, null);
         }
         return callback(null, output);

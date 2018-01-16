@@ -133,6 +133,19 @@
       async.map(histories, function(history, mapCallback) {
         var changedValues = [];
         var changedFields = [];
+
+        // Handle cases where there is no diff object
+        if (!history.diff) {
+          return mapCallback(null, {
+            changedBy: null,
+            changedAt: null,
+            updatedAt: null,
+            reason: null,
+            comment: null,
+            diff: {},
+          });
+        }
+        
         for (var key in history.diff) {
           if (history.diff.hasOwnProperty(key)) {
 

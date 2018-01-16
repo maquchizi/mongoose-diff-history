@@ -126,7 +126,9 @@
     History.find({
       collectionName: modelName,
       collectionId: id
-    }).populate('user').exec(function(err, histories) {
+    })
+    .sort({'createdAt': 'desc'})
+    .populate('user').exec(function(err, histories) {
       if (err) {
         return callback(err, null);
       }
@@ -145,7 +147,7 @@
             diff: {},
           });
         }
-        
+
         for (var key in history.diff) {
           if (history.diff.hasOwnProperty(key)) {
 

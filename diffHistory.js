@@ -162,7 +162,7 @@
         }
         var comment = "modified " + changedFields.concat(changedValues).join(", ");
         return mapCallback(null, {
-          changedBy: history.user.profile,
+          changedBy: history.user && history.user.profile ? history.user.profile : history.user,
           changedAt: history.createdAt,
           updatedAt: history.updatedAt,
           reason: history.reason,

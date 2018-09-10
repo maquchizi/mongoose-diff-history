@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "async": "*",
-    "jsondiffpatch": "0.2.5"
+    "jsondiffpatch": "0.2.5",
+    "lodash.foreach": "^4.5.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

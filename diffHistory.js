@@ -3,6 +3,7 @@
   var History = require("./diffHistoryModel");
   var async = require("async");
   var jsondiffpatch = require("jsondiffpatch").create();
+  var foreach = require("lodash.foreach");
 
   var saveHistoryObject = function(history, callback) {
     var keysToExclude = ['$setOnInsert', 'modified'];
@@ -31,6 +32,20 @@
           err.message = "Mongo Error :" + err.message;
           return callback();
         }
+        if (diff.certifications) {
+          foreach(diff.certifications, (value, key) => {
+            if (original.certifications[key]) {
+              const id = original.certifications[key].type;
+              diff.certifications[id] = value;
+              delete diff.certifications[key];
+            } else if (updated.certifications[key]) {
+              const id = updated.certifications[key].type;
+              diff.certifications[id] = value;
+              delete diff.certifications[key];
+            }
+          });
+        }
+
         var history = new History({
           collectionName: currentObject.constructor.modelName,
           collectionId: currentObject._id,
